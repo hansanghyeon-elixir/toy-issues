@@ -2,7 +2,7 @@ defmodule CliTest do
   use ExUnit.Case
   doctest ToyIssues
 
-  import ToyIssues.Cli, only: [parse_args: 1]
+  import ToyIssues.CLI, only: [parse_args: 1]
 
   test "`-h`나 `--help`를 받으면 :help를 반환한다" do
     assert parse_args(["-h", "anything"]) == :help
