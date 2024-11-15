@@ -45,5 +45,32 @@ defmodule ToyIssues.CLI do
 
   def process({user, project, _count}) do
     ToyIssues.GithubIssues.fetch(user, project)
+    |> decode_response()
+  end
+
+  def decode_response({:ok, body}), do: body
+
+  def decode_response({:erro, error}) do
+    IO.puts("Error fetching for Github: #{error["message"]}")
+
+    """
+    System.halt(2)은 현재 실행 중인 프로세스를
+    종료하면서 종료 코드를 2로 지정하는 명령어입니다.
+    일반적으로 이 종료 코드는 운영 체제에게 프로그램이
+    비정상적으로 종료되었음을 나타내는 데 사용됩니다.
+
+    - `System.halt()` 함수는 인수를 전달하지 않으면
+      기본적으로 0으로 종료하며, 이는 성공적으로 종료되었음을
+      의미합니다.
+    - 특정 오류 또는 실패 상태를 알리기 위해
+      `System.halt(2)` 와 같이 0이 아닌 종료 코드를
+      사용할 수 있습니다.
+
+    종료 코드 2는 특정한 규약에 따라 사용자가 설정할 수 있는
+    값이므로, 이 코드를 통해 다른 프로세스나 스크립트에서
+    프로그램이 비정상 종료되었음을 감지할 수 있습니다.
+    """
+
+    System.halt(2)
   end
 end
