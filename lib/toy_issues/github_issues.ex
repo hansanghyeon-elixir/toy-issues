@@ -13,7 +13,8 @@ defmodule ToyIssues.GithubIssues do
   end
 
   def handle_response({:ok, %{status_code: 200, body: body}}) do
-    {:ok, body}
+    # @see https://github.com/hansanghyeon-elixir/toy-issues/pull/7#issuecomment-2480453047
+    {:ok, body |> Poison.Parser.parse!(%{})}
   end
 
   def handle_response({_, %{status_code: status_code, body: body}}) do
