@@ -22,7 +22,8 @@ defmodule ToyIssues.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.0"},
-      {:poison, "~> 6.0"}
+      {:poison, "~> 6.0"},
+      {:mox, "~> 1.2", only: :test}
     ]
   end
 end
