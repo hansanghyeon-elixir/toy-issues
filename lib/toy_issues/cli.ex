@@ -89,4 +89,27 @@ defmodule ToyIssues.CLI do
     |> Enum.take(count)
     |> Enum.reverse()
   end
+
+  def format_table([]) do
+    {:error, "No issues found"}
+  end
+
+  # header와 row를 합쳐야한다.
+  def format_table(issues) do
+    """
+    #{format_header()}#{issues |> Enum.map(&format_row/1) |> Enum.join("\n")}
+    """
+  end
+
+  def format_header() do
+    """
+    #   | create_at            | title
+    ----+----------------------+---------------------------------
+    """
+  end
+
+  def format_row(%{"number" => number, "created_at" => created_at, "title" => title}) do
+    # number의 템플릿은 3자리로 맞추고, 나머지는 왼쪽으로 정렬
+    "#{String.pad_trailing(Integer.to_string(number), 3, " ")} | #{String.pad_trailing(created_at, 20, " ")} | #{title}"
+  end
 end
