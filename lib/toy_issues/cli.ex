@@ -4,12 +4,13 @@ defmodule ToyIssues.CLI do
   명령줄 파싱을 수행한 뒤, 각종 함수를 호출해
   깃허브 프로젝트의 최근 _n_개 이슈를 표 형식으로 만들어 출력한다.
   """
-  def run(argv) do
+  def run(argv, github_issues \\ ToyIssues.GithubIssues) do
     argv
     |> parse_args
-    |> process
+    |> process(github_issues)
   end
 
+  @spec parse_args([binary()]) :: :help | {any(), any(), integer()}
   @doc """
   'argv'는 -h 또는 --help(이 경우 :help를 반환)이거나,
   깃허브 사용자 이름, 프로젝트 이름, (선택적으로) 가져올 이슈 개수여야 한다.
@@ -35,7 +36,7 @@ defmodule ToyIssues.CLI do
     :help
   end
 
-  def process(:help) do
+  def process(:help, _github_issues) do
     IO.puts("""
     usage: issues <user> <project> [count | #{@default_count}]
     """)
@@ -43,8 +44,8 @@ defmodule ToyIssues.CLI do
     System.halt(0)
   end
 
-  def process({user, project, count}) do
-    ToyIssues.GithubIssues.fetch(user, project)
+  def process({user, project, count}, github_issues) do
+    github_issues.fetch(user, project)
     |> decode_response
     |> sort_into_descending_order
     |> last(count)
@@ -55,7 +56,7 @@ defmodule ToyIssues.CLI do
   def decode_response({:erro, error}) do
     IO.puts("Error fetching for Github: #{error["message"]}")
 
-    """
+    _c = """
     System.halt(2)은 현재 실행 중인 프로세스를
     종료하면서 종료 코드를 2로 지정하는 명령어입니다.
     일반적으로 이 종료 코드는 운영 체제에게 프로그램이
@@ -87,5 +88,28 @@ defmodule ToyIssues.CLI do
     list
     |> Enum.take(count)
     |> Enum.reverse()
+  end
+
+  def format_table([]) do
+    {:error, "No issues found"}
+  end
+
+  # header와 row를 합쳐야한다.
+  def format_table(issues) do
+    """
+    #{format_header()}#{issues |> Enum.map(&format_row/1) |> Enum.join("\n")}
+    """
+  end
+
+  def format_header() do
+    """
+    #   | create_at            | title
+    ----+----------------------+---------------------------------
+    """
+  end
+
+  def format_row(%{"number" => number, "created_at" => created_at, "title" => title}) do
+    # number의 템플릿은 3자리로 맞추고, 나머지는 왼쪽으로 정렬
+    "#{String.pad_trailing(Integer.to_string(number), 3, " ")} | #{String.pad_trailing(created_at, 20, " ")} | #{title}"
   end
 end
