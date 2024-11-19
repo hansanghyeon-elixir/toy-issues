@@ -4,6 +4,7 @@ defmodule ToyIssues.MixProject do
   def project do
     [
       app: :toy_issues,
+      escript: escript_config(),
       version: "0.1.0",
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
@@ -23,6 +24,12 @@ defmodule ToyIssues.MixProject do
     [
       {:httpoison, "~> 1.0"},
       {:poison, "~> 6.0"}
+    ]
+  end
+
+  defp escript_config do
+    [
+      main_module: ToyIssues.CLI
     ]
   end
 end
