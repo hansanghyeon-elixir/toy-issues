@@ -55,7 +55,7 @@ defmodule ToyIssues.CLI do
   def decode_response({:erro, error}) do
     IO.puts("Error fetching for Github: #{error["message"]}")
 
-    """
+    _c = """
     System.halt(2)은 현재 실행 중인 프로세스를
     종료하면서 종료 코드를 2로 지정하는 명령어입니다.
     일반적으로 이 종료 코드는 운영 체제에게 프로그램이
