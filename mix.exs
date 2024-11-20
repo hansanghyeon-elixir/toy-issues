@@ -23,7 +23,9 @@ defmodule ToyIssues.MixProject do
   defp deps do
     [
       {:httpoison, "~> 1.0"},
-      {:poison, "~> 6.0"}
+      {:poison, "~> 6.0"},
+      {:ex_doc, "~> 0.35"},
+      {:earmark, "~> 1.4.47"}
     ]
   end
 
