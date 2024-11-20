@@ -1,0 +1,33 @@
+name: Deploy Documentation to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 push될 때 실행 (필요에 따라 변경)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: '1.15.4' # 원하는 Elixir 버전
+        otp-version: '26.0'      # 원하는 OTP 버전
+
+    - name: Install dependencies
+      run: mix deps.get
+
+    - name: Generate docs
+      run: mix docs
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./doc  # mix docs의 기본 출력 디렉토리
+        publish_branch: gh-pages
