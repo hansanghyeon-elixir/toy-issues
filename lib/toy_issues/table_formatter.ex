@@ -22,9 +22,8 @@ defmodule ToyIssues.TableFormatter do
   'header' 파라미터는 추출할 필드(열) 이름이 담긴 리스트다.
 
   ## 사용 예
-    iex> list = [Enum.into([{"a", "1"}, {"b", "2"}, {"c","3"}], %{}),
-                  Enum.into([{"a", "4"}, {"b", "5"}, {"c","6"}], %{})]
-    iex> Issues.TableFormatter.split_into_columns(list, ["a", "b", "c"])
+    iex> list = [ Enum.into( [{"a", "1"}, {"b", "2"}, {"c","3"}], %{} ), Enum.into( [{"a", "4"}, {"b", "5"}, {"c","6"}], %{}) ]
+    iex> ToyIssues.TableFormatter.split_into_columns(list, ["a", "b", "c"])
     [ ["1", "4"], ["2", "5"], ["3", "6"] ]
 
   """
@@ -38,9 +37,9 @@ defmodule ToyIssues.TableFormatter do
   파라미터를 바이너리(문자열)로 변환해 반환한다.
 
   ## 사용 예
-    iex> Issues.TableFormatter.printable("a")
+    iex> ToyIssues.TableFormatter.printable("a")
     "a"
-    iex> Issues.TableFormatter.printable(99)
+    iex> ToyIssues.TableFormatter.printable(99)
     "99"
   """
   def printable(str) when is_binary(str), do: str
@@ -52,7 +51,7 @@ defmodule ToyIssues.TableFormatter do
 
   ## 사용 예
     iex> data = [ ["cat", "wombat", "elk"], ["mongoose", "ant", "gnu"] ]
-    iex> Issues.TableFormatter.widths_of(data)
+    iex> ToyIssues.TableFormatter.widths_of(data)
     [6, 8]
   """
   def widths_of(columns) do
@@ -65,8 +64,8 @@ defmodule ToyIssues.TableFormatter do
 
   ## 사용 예
     iex> widths = [5,6,99]
-    iex> Issues.TableFormatter.format_for(widths)
-    "~5s | ~6s | ~99s~n"
+    iex> ToyIssues.TableFormatter.format_for(widths)
+    "~-5s | ~-6s | ~-99s~n"
   """
   def format_for(column_widths) do
     Enum.map_join(column_widths, " | ", fn width -> "~-#{width}s" end) <> "~n"
@@ -78,8 +77,8 @@ defmodule ToyIssues.TableFormatter do
 
   ## 사용 예
     iex> widths = [5,6,9]
-    iex> Issues.TableFormatter.separator(widths)
-    "-----+------+---------"
+    iex> ToyIssues.TableFormatter.separator(widths)
+    "------+--------+----------"
   """
   def separator(column_widths) do
     Enum.map_join(column_widths, "-+-", fn width -> List.duplicate("-", width) end)
