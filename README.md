@@ -1,21 +1,15 @@
-# ToyIssues
-
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `toy_issues` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:toy_issues, "~> 0.1.0"}
-  ]
-end
 ```
+./toy_issues hansanghyeon-elixir toy-issues
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/toy_issues>.
+01:10:30.109 [info] Fetching hansanghyeon-elixir/toy-issues issues from GitHub
 
+01:10:30.668 [info] Got response: status code=200
+n | created_at           | title           
+--+----------------------+-----------------
+5 | 2024-11-15T10:58:18Z | ëìì
+                              ±ì²¦¬ 
+6 | 2024-11-15T10:58:34Z | ë¹¨ë¦¬ ìí´
+7 | 2024-11-16T06:35:55Z | ë°ì
+                              °ë¥¼ í
+8 | 2024-11-20T01:03:16Z | elixir íê¸ ì#  
+```
